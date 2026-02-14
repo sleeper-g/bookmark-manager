@@ -10,6 +10,7 @@ from app.models import (
     search_bookmarks,
     update_bookmark,
 )
+from app.utils import fetch_title
 
 app = FastAPI(title="Bookmark API")
 
@@ -26,16 +27,18 @@ async def get_db():
 
 @app.post("/bookmark")
 async def create(b: BookmarkCreate, db: AsyncSession = Depends(get_db)):
+    # Если заголовок не передан, пытаемся достать его из URL
+    title = b.title or await fetch_title(b.url)
     # Вместо сырого SQL создаем объект
     new_obj = await add_bookmark(
         db,
-        title = b.title,
+        title = title,
         url = b.url,
         description = b.description,
         tags = b.tags
     )
 
-    return {"status": "created", "id": new_obj.id}
+    return {"status": "created", "id": new_obj.id, "title": title}
 
 
 @app.get("/bookmarks")
