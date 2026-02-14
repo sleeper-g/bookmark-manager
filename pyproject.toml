@@ -27,7 +27,7 @@ line-length = 88
 [tool.ruff.lint]
 # "E" (Error), "F" (Pyflakes), "I" (Isort), "N" (Naming), "UP" (Upgrade)
 select = ["E", "F", "I", "N", "UP", "B"]
-ignore = []
+ignore = ["B008"]
 
 [tool.ruff.format]
 # Use double quotes, like Black
