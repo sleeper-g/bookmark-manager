@@ -8,7 +8,7 @@ install:
 run:
 	uv run uvicorn app.api:app --reload --host 127.0.0.1 --port 8000
 
-# Запуск тестов (без .py в конце!)
+# Запуск тестов
 test:
 	uv run python -m app.test_models
 
