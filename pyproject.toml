@@ -1,0 +1,35 @@
+[project]
+name = "bookmark-manager"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiosqlite>=0.22.1",
+    "alembic>=1.18.4",
+    "beautifulsoup4>=4.14.3",
+    "fastapi>=0.129.0",
+    "httpx>=0.28.1",
+    "sqlalchemy>=2.0.46",
+    "uvicorn>=0.40.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.1",
+]
+[tool.ruff]
+
+# Target Python version
+target-version = "py313"
+line-length = 88
+
+[tool.ruff.lint]
+# "E" (Error), "F" (Pyflakes), "I" (Isort), "N" (Naming), "UP" (Upgrade)
+select = ["E", "F", "I", "N", "UP", "B"]
+ignore = []
+
+[tool.ruff.format]
+# Use double quotes, like Black
+quote-style = "double"
+indent-style = "space"
