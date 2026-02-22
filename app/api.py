@@ -1,6 +1,7 @@
 from fastapi import Depends, FastAPI
 from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.db import AsyncSessionLocal
 from app.models import (
@@ -14,6 +15,13 @@ from app.utils import fetch_title
 
 app = FastAPI(title="Bookmark API")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 class BookmarkCreate(BaseModel):
     title: str
     url: str

@@ -21,6 +21,12 @@ lint:
 	uv run ruff check app --fix
 	uv run ruff format app
 
+ui:
+	cd frontend && npm run dev
+
+dev:
+	make -j2 run ui
+
 # Очистка
 clean:
 	rm -rf .venv .ruff_cache .pytest_cache app/__pycache__
