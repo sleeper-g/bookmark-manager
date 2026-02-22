@@ -1,0 +1,11 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app        # Пробрасываем код для горячей перезагрузки
+      - ./data:/app/data      # Папка для файла базы данных
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:///./data/bookmark.db
+    restart: always

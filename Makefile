@@ -8,6 +8,10 @@ install:
 run:
 	uv run uvicorn app.api:app --reload --host 127.0.0.1 --port 8000
 
+# Вызов: make cli args="list" или make cli args="add https://ya.ru"
+cli:
+	uv run python -m app.cli $(args)
+
 # Запуск тестов
 test:
 	uv run python -m app.test_models
@@ -25,3 +29,9 @@ clean:
 # Сборка образа
 build:
 	podman build -t bookmark-app .
+
+docker-up:
+	docker-compose up --build -d
+
+docker-down:
+	docker-compose down
