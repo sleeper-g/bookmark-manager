@@ -2,7 +2,8 @@ from fastapi import Depends, FastAPI
 from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.middleware.cors import CORSMiddleware
-
+from app.db import init_db
+from app.config import DB_PATH
 from app.db import AsyncSessionLocal
 from app.models import (
     add_bookmark,
@@ -75,3 +76,8 @@ async def update(bookmark_id: int, b: BookmarkCreate,
     # Мы распаковываем его через **kwargs в твою функцию models.update_bookmark
     await update_bookmark(db, bookmark_id, **b.model_dump())
     return {"status": "updated"}
+
+@app.on_event("startup")
+async def on_startup():
+    await init_db()
+    print(f"Database connected at {DB_PATH}")

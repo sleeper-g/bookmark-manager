@@ -4,12 +4,20 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 from app.config import DB_PATH
+import logging
 
 # Создаем движок. sqlite+aiosqlite говорит, что работаем асинхронно
 DATABASE_URL = f"sqlite+aiosqlite:///{DB_PATH}"
 #engine = create_async_engine(DATABASE_URL)
 # отладка
-engine = create_async_engine(DATABASE_URL, echo=True)
+engine = create_async_engine(DATABASE_URL, echo=False)
+
+# Логи: время - имя логгера - уровень - сообщение
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    datefmt="%H:%M:%S",
+)
 
 # Фабрика сессий (как раз то, через что будем делать запросы)
 AsyncSessionLocal = async_sessionmaker(bind=engine, expire_on_commit=False)
