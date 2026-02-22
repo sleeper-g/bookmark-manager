@@ -37,5 +37,21 @@ def add(
     
     asyncio.run(_run())
 
+@cli.command()
+def open_url(id: int):
+    """Открыть закладку в браузере по ID"""
+    import webbrowser
+    async def _run():
+        async with AsyncSessionLocal() as db:
+            # Тут нужна функция get_bookmark_by_id в models.py
+            # Но для примера:
+            bookmarks = await get_all_bookmarks(db)
+            target = next((b for b in bookmarks if b.id == id), None)
+            if target:
+                webbrowser.open(target.url)
+            else:
+                typer.echo("Не найдено")
+    asyncio.run(_run())
+    
 if __name__ == "__main__":
     cli()
