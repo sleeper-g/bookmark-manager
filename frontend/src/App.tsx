@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { getBookmarks, deleteBookmark } from './api'
 import type { Bookmark } from './api'
 import { ExternalLink, Trash2, Bookmark as BookmarkIcon } from 'lucide-react'
+import { AddBookmarkForm } from './addBookmarkForm'
 
 function App() {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([])
@@ -58,6 +59,7 @@ function App() {
           ))}
         </div>
       </div>
+      <AddBookmarkForm/>
     </div>
   )
 }
