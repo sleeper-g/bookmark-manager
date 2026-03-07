@@ -2,3 +2,4 @@ bookmark.db
 .env
 .venv
 __pycache__
+*.egg-info/
