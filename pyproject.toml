@@ -4,6 +4,10 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
+
+[project.scripts]
+bm = "app.cli:cli"
+
 dependencies = [
     "aiosqlite>=0.22.1",
     "alembic>=1.18.4",

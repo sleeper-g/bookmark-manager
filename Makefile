@@ -8,9 +8,9 @@ install:
 run:
 	uv run uvicorn app.api:app --reload --host 127.0.0.1 --port 8000
 
-# Вызов: make cli args="list" или make cli args="add https://ya.ru"
+# Вызов: make cli args="list" | make cli args="add https://ya.ru" | make cli args="open 1"
 cli:
-	uv run python -m app.cli $(args)
+	uv run bm $(args)
 
 # Запуск тестов
 test:

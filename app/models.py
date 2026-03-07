@@ -24,6 +24,12 @@ async def get_all_bookmarks(session: AsyncSession):
     # .scalars() превращает строки БД в объекты класса Bookmark
     return result.scalars().all()
 
+
+async def get_bookmark_by_id(session: AsyncSession, bookmark_id: int) -> Bookmark | None:
+    result = await session.execute(select(Bookmark).where(Bookmark.id == bookmark_id))
+    return result.scalars().one_or_none()
+
+
 async def delete_bookmark(session: AsyncSession, bookmark_id: int):
     # Мы можем просто найти объект и удалить его, либо использовать delete()
     stmt = delete(Bookmark).where(Bookmark.id == bookmark_id)
