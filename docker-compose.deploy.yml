@@ -1,0 +1,36 @@
+# Деплой за Nginx Proxy Manager по пути /bookmark-manager
+# Скопируй эти services и networks в свой docker-compose на сервере.
+
+version: "3.8"
+
+networks:
+  frontend:
+    name: frontend
+    external: true
+
+services:
+  bookmark-api:
+    build: .
+    expose:
+      - "8000"
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:///./data/bookmark.db
+      - API_PATH_PREFIX=/bookmark-manager/api
+    volumes:
+      - bookmark_data:/app/data
+    restart: unless-stopped
+    networks:
+      - frontend
+
+  bookmark-web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    expose:
+      - "80"
+    restart: unless-stopped
+    networks:
+      - frontend
+
+volumes:
+  bookmark_data:

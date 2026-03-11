@@ -3,3 +3,6 @@ bookmark.db
 .venv
 __pycache__
 *.egg-info/
+DEPLOY.md
+TODO.md
+.cursor/

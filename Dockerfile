@@ -17,4 +17,6 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["uvicorn", "app.api:app", "--host", "0.0.0.0", "--port", "8000"]
+# Для деплоя по пути задай API_PATH_PREFIX=/bookmark-manager/api и DATABASE_URL
+ENV API_PATH_PREFIX="${API_PATH_PREFIX:-}"
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.middleware.cors import CORSMiddleware
 from app.db import init_db
-from app.config import DB_PATH
+from app.config import DATABASE_URL
 from app.db import AsyncSessionLocal
 from app.models import (
     add_bookmark,
@@ -18,7 +18,7 @@ app = FastAPI(title="Bookmark API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -80,4 +80,4 @@ async def update(bookmark_id: int, b: BookmarkCreate,
 @app.on_event("startup")
 async def on_startup():
     await init_db()
-    print(f"Database connected at {DB_PATH}")
+    print("Database connected")

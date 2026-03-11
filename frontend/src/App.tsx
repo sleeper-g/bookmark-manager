@@ -1,19 +1,47 @@
-import { AddBookmarkForm } from "./components/addBookmarkForm"
-import { Header, ADD_FORM_ID } from "./components/Header"
+import { useState } from "react"
+import { useQueryClient } from "@tanstack/react-query"
+import { AddBookmarkDialog } from "./components/AddBookmarkDialog"
+import { BookmarkList } from "./components/BookmarkList"
+import { Header } from "./components/Header"
+import { SearchOverlay } from "./components/SearchOverlay"
+import { BOOKMARKS_QUERY_KEY } from "./components/BookmarkList"
 
 function App() {
+  const queryClient = useQueryClient()
+  const [searchQuery, setSearchQuery] = useState("")
+  const [searchOverlayOpen, setSearchOverlayOpen] = useState(false)
+  const [addDialogOpen, setAddDialogOpen] = useState(false)
+
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-      <main className="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-8">
-        <section id={ADD_FORM_ID} className="scroll-mt-6">
-          <AddBookmarkForm onBookmarkAdded={() => {}} />
-        </section>
-        <section className="mt-8">
-          <h2 className="mb-3 text-lg font-medium text-foreground">Закладки</h2>
-          <p className="text-sm text-muted-foreground">
-            Список закладок будет здесь.
-          </p>
+      <Header
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        onOpenSearchOverlay={() => setSearchOverlayOpen(true)}
+        onOpenAddDialog={() => setAddDialogOpen(true)}
+      />
+
+      <SearchOverlay
+        open={searchOverlayOpen}
+        onOpenChange={setSearchOverlayOpen}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+      />
+
+      <AddBookmarkDialog
+        open={addDialogOpen}
+        onOpenChange={setAddDialogOpen}
+        onBookmarkAdded={() =>
+          queryClient.invalidateQueries({ queryKey: BOOKMARKS_QUERY_KEY })
+        }
+      />
+
+      <main className="mx-auto max-w-4xl px-4 py-6 sm:px-6 sm:py-8">
+        <section>
+          <h2 className="mb-4 text-lg font-semibold text-foreground">
+            {searchQuery.trim() ? "Результаты поиска" : "Закладки"}
+          </h2>
+          <BookmarkList searchQuery={searchQuery.trim()} />
         </section>
       </main>
     </div>
